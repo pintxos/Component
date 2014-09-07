@@ -6,39 +6,50 @@
 	if(typeof define !== 'function') {
 		window.define = function( deps, definition ) {
 			window.pintxos = window.pintxos || {};
-			window.pintxos.Component = definition();
+			window.pintxos.Component = definition(jQuery, window.pintxos.Destroyable, window.pintxos.inherit);
 			define = null;
 		};
 	}
 
-	define([], function () {
+	define(
+	[
+		'jquery',
+		'pintxos-destroyable',
+		'pintxos-inherit'
+	], function (
+		$,
+		Destroyable,
+		inherit
+	) {
 
-		'use strict';
+		var Component, _defaults;
+
+		_defaults = {
+
+		};
+
 
 		/* Constructor
 		----------------------------------------------- */
-		var Component = function () {
+		Component = function (el, options) {
+
+			this._settings = $({}, _defaults, options);
+			this._$el = $(el);
 
 		};
+
+		inherit(Component, Destroyable);
 
 
 		/* Methods
 		----------------------------------------------- */
 
-		/**
-		 * All bootstrap logic should go here
-		 * @return {void}
-		 */
-		Component.prototype.init = function () {
-
+		Component.prototype.getEl = function () {
+			return this._$el;
 		};
 
-		/**
-		 * All teardown logic should go here
-		 * @return {void}
-		 */
-		Component.prototype.destroy = function () {
-
+		Component.prototype.getSettings = function () {
+			return this._settings;
 		};
 
 

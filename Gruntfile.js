@@ -1,15 +1,20 @@
 module.exports = function (grunt) {
 
+	'use strict';
+
 	require('load-grunt-tasks')(grunt);
 
 	grunt.initConfig({
 
 		karma: {
 			options: {
-				basePath: '',
+				basePath: 'bower_components/',
 				files: [
-					'index.js',
-					'test/*.js'
+					'pintxos-destroyable/index.js',
+					'pintxos-inherit/index.js',
+					'jquery/dist/jquery.js',
+					'../index.js',
+					'../test/*.js'
 				],
 				frameworks: [
 					'jasmine'
