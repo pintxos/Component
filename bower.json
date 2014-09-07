@@ -1,0 +1,16 @@
+{
+	"name": "pintxos-component",
+	"version": "0.0.0",
+	"homepage": "https://github.com/pintxos/Component",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test"
+	],
+	"authors": [
+		"Jelle Versele"
+	],
+	"dependencies": {}
+}
+
