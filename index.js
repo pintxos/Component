@@ -25,7 +25,10 @@
 		var Component, _defaults;
 
 		_defaults = {
-
+			events: {
+				init: 'init.Component',
+				destroy: 'destroy.Component'
+			}
 		};
 
 
@@ -33,7 +36,8 @@
 		----------------------------------------------- */
 		Component = function (el, options) {
 
-			this._settings = $({}, _defaults, options);
+			this._settings = $.extend(true, {}, _defaults, options);
+
 			this._$el = $(el);
 
 		};
@@ -43,6 +47,27 @@
 
 		/* Methods
 		----------------------------------------------- */
+
+		/**
+		 * Initialise component.
+		 * All bootstrap logic should go here.
+		 * @return {void}
+		 */
+		Component.prototype.init = function () {
+			this._superClass.init.call(this);
+			this.getEl().trigger(this.getSettings().events.init);
+		};
+
+		/**
+		 * Destroys the component.
+		 * All teardown logic like removing event handlers and
+		 * removing references to DOM elements should happen here.
+		 * @return {void}
+		 */
+		Component.prototype.destroy = function () {
+			this._superClass.destroy.call(this);
+			this.getEl().trigger(this.getSettings().events.destroy);
+		};
 
 		Component.prototype.getEl = function () {
 			return this._$el;
