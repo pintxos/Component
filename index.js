@@ -69,10 +69,18 @@
 			this.getEl().trigger(this.getSettings().events.destroy);
 		};
 
+		/**
+		 * Getter for _$el
+		 * @return {jQuery}
+		 */
 		Component.prototype.getEl = function () {
 			return this._$el;
 		};
 
+		/**
+		 * Getter for _settings
+		 * @return {Object}
+		 */
 		Component.prototype.getSettings = function () {
 			return this._settings;
 		};
