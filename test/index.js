@@ -50,4 +50,38 @@ describe('Component', function () {
 
 	});
 
+	describe('event API', function () {
+
+		var $link;
+
+		beforeEach(function () {
+			$('body').remove('.testLink');
+			$('body').append('<a class="testLink" href="#">Test</a>');
+			$link = $('.testLink');
+		});
+
+		it('Should execute an event handler bound with _on, should not execute the event handler when it is unbound with _off', function () {
+
+			var catched = false, id;
+
+			id = instance._on($link, 'click', function () {
+				catched = true;
+			});
+
+			$link.trigger('click');
+
+			expect(catched).toBe(true);
+
+			catched = false;
+			instance._off(id);
+
+			$link.trigger('click');
+			expect(catched).toBe(false);
+
+
+
+		});
+
+	});
+
 });

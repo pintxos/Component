@@ -22,8 +22,12 @@
 		inherit
 	) {
 
-		var Component, _defaults;
+		var Component, _defaults, _uid;
 
+		_uid = 0;
+
+		/* Default settings
+		----------------------------------------------- */
 		_defaults = {
 			events: {
 				init: 'init.Component',
@@ -35,11 +39,10 @@
 		/* Constructor
 		----------------------------------------------- */
 		Component = function (el, options) {
-
 			this._settings = $.extend(true, {}, _defaults, options);
-
 			this._$el = $(el);
 
+			this._eventData = {};
 		};
 
 		inherit(Component, Destroyable);
@@ -83,6 +86,72 @@
 		 */
 		Component.prototype.getSettings = function () {
 			return this._settings;
+		};
+
+		/**
+		 * Bind event handlers to DOM event using jQuery's on method while
+		 * making sure the event handler's context is set to the class instance
+		 * instead of the event target. Will return a unique id which can be used
+		 * to unbind the event handler.
+		 * @param  {jQuery}
+		 * @param  {string}
+		 * @param  {string} (optional)
+		 * @param  {function}
+		 * @return {string}
+		 */
+		Component.prototype._on = function ($el, event, selector, handler) {
+
+			var eventData, uid, handlerWrapper;
+
+			// shuffle arguments
+			if(typeof selector === 'function') {
+				handler = selector;
+				selector = null;
+			}
+
+			// making sure that the event handler's this keyword is pointing to the
+			// class instance instead of the event target. This way we're also creating
+			// a unique event handler to unbind with later on.
+			handlerWrapper = function () {
+				handler.apply(this, arguments);
+			};
+
+			// using jQuery's on method to actually bind the event handler
+			$el.on(event, selector, handlerWrapper);
+
+			// create a map with all data needed to unbind the event
+			eventData = {
+				handler: handlerWrapper,
+				$el: $el,
+				event: event,
+				selector: selector
+			};
+
+			uid = '_event' + (_uid ++);
+			this._eventData[uid] = eventData;
+
+			return uid;
+
+		};
+
+		/**
+		 * Unbind event handlers bound with the _on method.
+		 * @param  {string}
+		 * @return {boolean}
+		 */
+		Component.prototype._off = function (uid) {
+
+			var eventData, result;
+
+			result = false;
+
+			if(this._eventData.hasOwnProperty(uid)) {
+				eventData = this._eventData[uid];
+				eventData.$el.off(eventData.event, eventData.selector, eventData.handler);
+				result = true;
+			}
+
+			return result;
 		};
 
 
