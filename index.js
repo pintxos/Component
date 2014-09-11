@@ -43,6 +43,7 @@
 			this._$el = $(el);
 
 			this._eventData = {};
+			this._queryCache = {};
 		};
 
 		inherit(Component, Destroyable);
@@ -152,6 +153,37 @@
 			}
 
 			return result;
+		};
+
+		/**
+		 * Query for DOM elements using jQuery's query function
+		 * while maintaining a cache to avoid unnecessary DOM queries.
+		 * @param  {string}
+		 * @param  {string|jQuery} (optional) defaults to the component's main element
+		 * @param  {boolean} (optional) defaults to false
+		 * @return {jQuery}
+		 */
+		Component.prototype._query = function (selector, context, forceQuery) {
+
+			var $context, $result;
+
+			// shuffle arguments
+			if(typeof context === 'undefined' || typeof context === 'boolean') {
+				context = this.getEl();
+				forceQuery = context;
+			}
+
+			forceQuery = (typeof forceQuery === 'undefined') ? false : forceQuery;
+
+			if(!this._queryCache.hasOwnProperty(selector) || forceQuery) {
+				$context = (context instanceof jQuery) ? context : $(context);
+				$result = $context.find(selector);
+				this._queryCache[selector] = $result;
+			}else{
+				$result = this._queryCache[selector];
+			}
+
+			return $result;
 		};
 
 
