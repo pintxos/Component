@@ -3,7 +3,7 @@ describe('Component', function () {
 	var instance;
 
 	beforeEach(function () {
-		$('body').append('<div class="test"/>');
+		$('body').append('<div class="test"><div class="child"/></div>');
 		instance = new pintxos.Component($('.test')[0], {});
 	});
 
@@ -100,7 +100,28 @@ describe('Component', function () {
 
 	});
 
+	describe('query cache', function () {
 
+		var $test;
+
+		beforeEach(function () {
+			$('#test').remove();
+			$('body').append('<div id="test"/>');
+			$test = $('#test');
+		});
+
+		it('should cache elements', function () {
+			var $result = instance._query('.child');
+			expect(instance._queryCache['.child']).toEqual($result)
+		});
+
+		it('should not create duplicated cache intries', function () {
+			instance._query('.child');
+			instance._query('.child');
+			expect(Object.keys(instance._queryCache).length).toEqual(1)
+		});
+
+	});
 
 
 
