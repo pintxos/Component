@@ -69,6 +69,13 @@
 		 * @return {void}
 		 */
 		Component.prototype.destroy = function () {
+
+			// unbind all event handlers
+			this._off();
+
+			// removing references to DOM element by clearing out the query cache
+			this._clearQueryCache();
+
 			this._superClass.destroy.call(this);
 			this.getEl().trigger(this.getSettings().events.destroy);
 		};
@@ -137,22 +144,25 @@
 
 		/**
 		 * Unbind event handlers bound with the _on method.
-		 * @param  {string}
-		 * @return {boolean}
+		 * If the uid parameter is omitted, all event handlers will be unbind.
+		 * @param  {string} (optional)
+		 * @return {void}
 		 */
 		Component.prototype._off = function (uid) {
 
-			var eventData, result;
+			var eventData, key;
 
-			result = false;
+			if(typeof uid === 'undefined') {
 
-			if(this._eventData.hasOwnProperty(uid)) {
+				for(key in this._eventData) {
+					this._off(key);
+				}
+
+			}else if(this._eventData.hasOwnProperty(uid)) {
 				eventData = this._eventData[uid];
 				eventData.$el.off(eventData.event, eventData.selector, eventData.handler);
-				result = true;
 			}
 
-			return result;
 		};
 
 		/**
@@ -185,6 +195,14 @@
 
 			return $result;
 		};
+
+		/**
+		 * Empty query cache
+		 * @return {void}
+		 */
+		Component.prototype._clearQueryCache = function () {
+			this._queryCache = {};
+		}
 
 
 		/* Event handlers
