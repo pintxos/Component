@@ -44,6 +44,9 @@
 
 			this._eventData = {};
 			this._queryCache = {};
+
+			Destroyable.call(this);
+
 		};
 
 		inherit(Component, Destroyable);
@@ -202,7 +205,7 @@
 		 */
 		Component.prototype._clearQueryCache = function () {
 			this._queryCache = {};
-		}
+		};
 
 
 		/* Event handlers
