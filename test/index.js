@@ -62,26 +62,46 @@ describe('Component', function () {
 
 		it('Should execute an event handler bound with _on, should not execute the event handler when it is unbound with _off', function () {
 
-			var catched = false, id;
+			var clicked = false, id;
 
 			id = instance._on($link, 'click', function () {
-				catched = true;
+				clicked = true;
 			});
 
 			$link.trigger('click');
 
-			expect(catched).toBe(true);
+			expect(clicked).toBe(true);
 
-			catched = false;
+			clicked = false;
 			instance._off(id);
 
 			$link.trigger('click');
-			expect(catched).toBe(false);
+			expect(clicked).toBe(false);
 
 
 
 		});
 
+		it('Should unbind all event handlers when the component is destroyed', function () {
+
+			var clicked = false, id;
+
+			id = instance._on($link, 'click', function () {
+				clicked = true;
+			});
+
+			instance.destroy();
+
+			$link.trigger('click');
+
+			expect(clicked).toBe(false);
+
+		});
+
 	});
+
+
+
+
 
 });
