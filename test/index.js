@@ -115,10 +115,16 @@ describe('Component', function () {
 			expect(instance._queryCache['.child']).toEqual($result)
 		});
 
-		it('should not create duplicated cache intries', function () {
+		it('should not create duplicated cache entries', function () {
 			instance._query('.child');
 			instance._query('.child');
 			expect(Object.keys(instance._queryCache).length).toEqual(1)
+		});
+
+		it('should clear the query cache when the component is destroyed', function () {
+			instance._query('.child');
+			instance.destroy();
+			expect(Object.keys(instance._queryCache).length).toEqual(0);
 		});
 
 	});
