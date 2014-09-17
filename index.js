@@ -61,7 +61,7 @@
 		 * @return {void}
 		 */
 		Component.prototype.init = function () {
-			this._superClass.init.call(this);
+			Component._super.init.call(this);
 			this.getEl().trigger(this.getSettings().events.init);
 		};
 
@@ -79,7 +79,7 @@
 			// removing references to DOM element by clearing out the query cache
 			this._clearQueryCache();
 
-			this._superClass.destroy.call(this);
+			Component._super.destroy.call(this);
 			this.getEl().trigger(this.getSettings().events.destroy);
 		};
 

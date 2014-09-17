@@ -1,19 +1,19 @@
 {
-  "name": "pintxos-component",
-  "version": "1.0.0",
-  "homepage": "https://github.com/pintxos/Component",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test"
-  ],
-  "authors": [
-    "Jelle Versele"
-  ],
-  "dependencies": {
-    "pintxos-destroyable": "~1.0.0",
-    "pintxos-inherit": "~1.0.0",
-    "jquery": "~2.1.1"
-  }
+	"name": "pintxos-component",
+	"version": "1.0.0",
+	"homepage": "https://github.com/pintxos/Component",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test"
+	],
+	"authors": [
+		"Jelle Versele"
+	],
+	"dependencies": {
+		"pintxos-destroyable": "~1.0.0",
+		"pintxos-inherit": "~2.0.0",
+		"jquery": "~2.1.1"
+	}
 }
