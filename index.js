@@ -166,6 +166,8 @@
 			}else if(this._eventData.hasOwnProperty(uid)) {
 				eventData = this._eventData[uid];
 				eventData.$el.off(eventData.event, eventData.selector, eventData.handler);
+
+				delete this._eventData[uid];
 			}
 
 		};

@@ -74,8 +74,7 @@ describe('Component', function () {
 
 			$link.trigger('click');
 			expect(clicked).toBe(false);
-
-
+			expect(instance._eventData[id]).not.toBeDefined();
 
 		});
 
