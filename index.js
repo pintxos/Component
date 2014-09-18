@@ -112,7 +112,9 @@
 		 */
 		Component.prototype._on = function ($el, event, selector, handler) {
 
-			var eventData, uid, handlerWrapper;
+			var eventData, uid, handlerWrapper, _self;
+
+			_self = this;
 
 			// shuffle arguments
 			if(typeof selector === 'function') {
@@ -124,7 +126,7 @@
 			// class instance instead of the event target. This way we're also creating
 			// a unique event handler to unbind with later on.
 			handlerWrapper = function () {
-				handler.apply(this, arguments);
+				handler.apply(_self, arguments);
 			};
 
 			// using jQuery's on method to actually bind the event handler

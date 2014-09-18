@@ -3,12 +3,9 @@ describe('Component', function () {
 	var instance;
 
 	beforeEach(function () {
+		$('.test').remove();
 		$('body').append('<div class="test"><div class="child"/></div>');
 		instance = new pintxos.Component($('.test')[0], {});
-	});
-
-	afterEach(function () {
-		$('.test').remove();
 	});
 
 
@@ -55,7 +52,7 @@ describe('Component', function () {
 		var $link;
 
 		beforeEach(function () {
-			$('body').remove('.testLink');
+			$('.testLink').remove();
 			$('body').append('<a class="testLink" href="#">Test</a>');
 			$link = $('.testLink');
 		});
@@ -96,6 +93,14 @@ describe('Component', function () {
 
 			expect(clicked).toBe(false);
 
+		});
+
+		it('The context of the event handler should be the instance instead of the event target', function () {
+			instance._on($link, 'click', function () {
+				expect(this).toEqual(instance);
+			});
+
+			$link.trigger('click');
 		});
 
 	});
