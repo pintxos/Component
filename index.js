@@ -80,6 +80,7 @@
 			this._clearQueryCache();
 
 			Component._super.destroy.call(this);
+
 			this.getEl().trigger(this.getSettings().events.destroy);
 		};
 
@@ -210,10 +211,6 @@
 		Component.prototype._clearQueryCache = function () {
 			this._queryCache = {};
 		};
-
-
-		/* Event handlers
-		----------------------------------------------- */
 
 
 		/* Export
