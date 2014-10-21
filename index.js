@@ -205,6 +205,17 @@
 		};
 
 		/**
+		 * Given a string, jQuery object, HTML Element or undefined, this method will
+		 * always make sure to return a jQuery object. Very usefull when trying to convert
+		 * a settings property to a jQuery object.
+		 * @param  {string|jQuery|string|undefined}
+		 * @return {jQuery}
+		 */
+		Component.prototype._resolveElement = function (element) {
+
+		};
+
+		/**
 		 * Empty query cache
 		 * @return {void}
 		 */
