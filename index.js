@@ -165,6 +165,7 @@
 				}
 
 			}else if(this._eventData.hasOwnProperty(uid)) {
+
 				eventData = this._eventData[uid];
 				eventData.$el.off(eventData.event, eventData.selector, eventData.handler);
 
@@ -206,7 +207,7 @@
 
 		/**
 		 * Given a string, jQuery object, HTML Element or undefined, this method will
-		 * always make sure to return a jQuery object. Very usefull when trying to convert
+		 * always make sure to return a jQuery object. Very useful when trying to convert
 		 * a settings property to a jQuery object.
 		 * @param  {string|jQuery|string|undefined}
 		 * @return {jQuery}
