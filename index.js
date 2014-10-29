@@ -102,7 +102,7 @@
 
 		/**
 		 * Bind event handlers to DOM event using jQuery's on method while
-		 * making sure the event handler's context is set to the class instance
+		 * making sure the event handler's context is pointing to the class instance
 		 * instead of the event target. Will return a unique id which can be used
 		 * to unbind the event handler.
 		 * @param  {jQuery}
@@ -124,7 +124,7 @@
 			}
 
 			// making sure that the event handler's this keyword is pointing to the
-			// class instance instead of the event target. This way we're also creating
+			// class instance instead of the event target. We're also creating
 			// a unique event handler to unbind with later on.
 			handlerWrapper = function () {
 				handler.apply(_self, arguments);
