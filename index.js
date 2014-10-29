@@ -6,20 +6,16 @@
 	if(typeof define !== 'function') {
 		window.define = function( deps, definition ) {
 			window.pintxos = window.pintxos || {};
-			window.pintxos.Component = definition(jQuery, window.pintxos.Destroyable, window.pintxos.inherit);
+			window.pintxos.Component = definition(jQuery);
 			define = null;
 		};
 	}
 
 	define(
 	[
-		'jquery',
-		'pintxos-destroyable',
-		'pintxos-inherit'
+		'jquery'
 	], function (
-		$,
-		Destroyable,
-		inherit
+		$
 	) {
 
 		var Component, _defaults, _uid;
@@ -44,12 +40,9 @@
 
 			this._eventData = {};
 			this._queryCache = {};
-
-			Destroyable.call(this);
+			this._isDestroyed = true;
 
 		};
-
-		inherit(Component, Destroyable);
 
 
 		/* Methods
@@ -61,7 +54,13 @@
 		 * @return {void}
 		 */
 		Component.prototype.init = function () {
-			Component._super.init.call(this);
+
+			if(!this.isDestroyed()) {
+				this.destroy();
+			}
+
+			this._isDestroyed = false;
+
 			this.getEl().trigger(this.getSettings().events.init);
 		};
 
@@ -79,9 +78,17 @@
 			// removing references to DOM element by clearing out the query cache
 			this._clearQueryCache();
 
-			Component._super.destroy.call(this);
+			this._isDistroyed = true;
 
 			this.getEl().trigger(this.getSettings().events.destroy);
+		};
+
+		/**
+		 * Getter for _isDestroyed
+		 * @return {Boolean}
+		 */
+		Component.prototype.isDestroyed = function () {
+			return this._isDestroyed;
 		};
 
 		/**
