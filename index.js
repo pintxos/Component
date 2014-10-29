@@ -213,6 +213,19 @@
 		 */
 		Component.prototype._resolveElement = function (element) {
 
+			var $result;
+
+			$result = undefined;
+
+			if(typeof element === 'undefined') {
+				$result = this.getEl();
+			}else if(typeof element === 'string') {
+				$result = this._query(element);
+			}else if (element instanceof jQuery) {
+				$result = element;
+			}
+
+			return $result;
 		};
 
 		/**
