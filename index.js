@@ -51,6 +51,7 @@
 		/**
 		 * Initialise component.
 		 * All bootstrap logic should go here.
+		 *
 		 * @return {void}
 		 */
 		Component.prototype.init = function () {
@@ -68,6 +69,7 @@
 		 * Destroys the component.
 		 * All teardown logic like removing event handlers and
 		 * removing references to DOM elements should happen here.
+		 *
 		 * @return {void}
 		 */
 		Component.prototype.destroy = function () {
@@ -85,6 +87,7 @@
 
 		/**
 		 * Getter for _isDestroyed
+		 *
 		 * @return {Boolean}
 		 */
 		Component.prototype.isDestroyed = function () {
@@ -93,6 +96,7 @@
 
 		/**
 		 * Getter for _$el
+		 *
 		 * @return {jQuery}
 		 */
 		Component.prototype.getEl = function () {
@@ -101,6 +105,7 @@
 
 		/**
 		 * Getter for _settings
+		 *
 		 * @return {Object}
 		 */
 		Component.prototype.getSettings = function () {
@@ -111,10 +116,12 @@
 		 * Bind handlers to DOM events using jQuery's on() method while
 		 * making sure the event handler's context is pointing to the class instance
 		 * instead of the event target. Will return a unique event handler id.
+		 *
 		 * @param  {jQuery}
 		 * @param  {string}
 		 * @param  {string} (optional)
 		 * @param  {function}
+		 *
 		 * @return {string}
 		 */
 		Component.prototype._on = function ($el, event, selector, handler) {
@@ -157,7 +164,9 @@
 		/**
 		 * Unbind event handlers bound with the _on() method.
 		 * If the uid parameter is omitted, all event handlers will be unbind.
+		 *
 		 * @param  {string} (optional)
+		 *
 		 * @return {void}
 		 */
 		Component.prototype._off = function (uid) {
@@ -183,9 +192,11 @@
 		/**
 		 * Query for DOM elements using jQuery's query function
 		 * while maintaining a cache to avoid unnecessary DOM queries.
+		 *
 		 * @param  {string}
 		 * @param  {string|jQuery} (optional) defaults to the component's main element
 		 * @param  {boolean} (optional) defaults to false
+		 *
 		 * @return {jQuery}
 		 */
 		Component.prototype._query = function (selector, context, forceQuery) {
@@ -215,7 +226,9 @@
 		 * Given a string, jQuery object, HTML Element or undefined, this method will
 		 * always make sure to return a jQuery object. Very useful when trying to convert
 		 * a settings property to a jQuery object.
+		 *
 		 * @param  {string|jQuery|string|undefined}
+		 *
 		 * @return {jQuery}
 		 */
 		Component.prototype._resolveElement = function (element) {
@@ -237,6 +250,7 @@
 
 		/**
 		 * Empty query cache
+		 *
 		 * @return {void}
 		 */
 		Component.prototype._clearQueryCache = function () {
