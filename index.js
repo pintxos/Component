@@ -108,10 +108,9 @@
 		};
 
 		/**
-		 * Bind event handlers to DOM event using jQuery's on method while
+		 * Bind handlers to DOM events using jQuery's on() method while
 		 * making sure the event handler's context is pointing to the class instance
-		 * instead of the event target. Will return a unique id which can be used
-		 * to unbind the event handler.
+		 * instead of the event target. Will return a unique event handler id.
 		 * @param  {jQuery}
 		 * @param  {string}
 		 * @param  {string} (optional)
@@ -156,7 +155,7 @@
 		};
 
 		/**
-		 * Unbind event handlers bound with the _on method.
+		 * Unbind event handlers bound with the _on() method.
 		 * If the uid parameter is omitted, all event handlers will be unbind.
 		 * @param  {string} (optional)
 		 * @return {void}
