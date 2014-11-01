@@ -237,12 +237,14 @@
 
 			$result = undefined;
 
-			if(typeof element === 'undefined') {
+			if(element instanceof jQuery) {
+				$result = element;
+			}else if(typeof element === 'undefined') {
 				$result = this.getEl();
 			}else if(typeof element === 'string') {
 				$result = this._query(element);
-			}else if (element instanceof jQuery) {
-				$result = element;
+			}else if(element instanceof HTMLElement) {
+				$result = $(element);
 			}
 
 			return $result;

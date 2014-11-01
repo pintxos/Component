@@ -143,6 +143,12 @@ describe('Component', function () {
 			expect($el).toBe(instance.getEl());
 		});
 
+		it('should return a jQuery object when given an HTMLElement', function () {
+			var $el = instance._resolveElement(instance.getEl().find('.child')[0]);
+			var el = instance.getEl().find('.child')[0];
+			expect($el[0]).toBe(instance.getEl().find('.child')[0]);
+		});
+
 	});
 
 
