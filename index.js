@@ -228,21 +228,23 @@
 		 * a settings property to a jQuery object.
 		 *
 		 * @param  {string|jQuery|string|undefined}
+		 * @param {Boolean}
 		 *
 		 * @return {jQuery}
 		 */
-		Component.prototype._resolveElement = function (element) {
+		Component.prototype._resolveElement = function (element, forceQuery) {
 
 			var $result;
 
 			$result = undefined;
+			forceQuery = (typeof forceQuery !== 'undefined') ? forceQuery : false;
 
 			if(element instanceof jQuery) {
 				$result = element;
 			}else if(typeof element === 'undefined') {
 				$result = this.getEl();
 			}else if(typeof element === 'string') {
-				$result = this._query(element);
+				$result = this._query(element, forceQuery);
 			}else if(element instanceof HTMLElement) {
 				$result = $(element);
 			}
