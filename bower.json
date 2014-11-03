@@ -12,8 +12,6 @@
 		"Jelle Versele"
 	],
 	"dependencies": {
-		"pintxos-destroyable": "~1.0.0",
-		"pintxos-inherit": "~2.0.0",
-		"jquery": "~2.1.1"
+		"jquery": ">=1.7"
 	}
 }
