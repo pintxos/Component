@@ -6,20 +6,16 @@
 	if(typeof define !== 'function') {
 		window.define = function( deps, definition ) {
 			window.pintxos = window.pintxos || {};
-			window.pintxos.Component = definition(jQuery, window.pintxos.Destroyable, window.pintxos.inherit);
+			window.pintxos.Component = definition(jQuery);
 			define = null;
 		};
 	}
 
 	define(
 	[
-		'jquery',
-		'pintxos-destroyable',
-		'pintxos-inherit'
+		'jquery'
 	], function (
-		$,
-		Destroyable,
-		inherit
+		$
 	) {
 
 		var Component, _defaults, _uid;
@@ -44,12 +40,9 @@
 
 			this._eventData = {};
 			this._queryCache = {};
-
-			Destroyable.call(this);
+			this._isDestroyed = true;
 
 		};
-
-		inherit(Component, Destroyable);
 
 
 		/* Methods
@@ -58,10 +51,17 @@
 		/**
 		 * Initialise component.
 		 * All bootstrap logic should go here.
+		 *
 		 * @return {void}
 		 */
 		Component.prototype.init = function () {
-			Component._super.init.call(this);
+
+			if(!this.isDestroyed()) {
+				this.destroy();
+			}
+
+			this._isDestroyed = false;
+
 			this.getEl().trigger(this.getSettings().events.init);
 		};
 
@@ -69,6 +69,7 @@
 		 * Destroys the component.
 		 * All teardown logic like removing event handlers and
 		 * removing references to DOM elements should happen here.
+		 *
 		 * @return {void}
 		 */
 		Component.prototype.destroy = function () {
@@ -79,13 +80,23 @@
 			// removing references to DOM element by clearing out the query cache
 			this._clearQueryCache();
 
-			Component._super.destroy.call(this);
+			this._isDistroyed = true;
 
 			this.getEl().trigger(this.getSettings().events.destroy);
 		};
 
 		/**
+		 * Getter for _isDestroyed
+		 *
+		 * @return {Boolean}
+		 */
+		Component.prototype.isDestroyed = function () {
+			return this._isDestroyed;
+		};
+
+		/**
 		 * Getter for _$el
+		 *
 		 * @return {jQuery}
 		 */
 		Component.prototype.getEl = function () {
@@ -94,6 +105,7 @@
 
 		/**
 		 * Getter for _settings
+		 *
 		 * @return {Object}
 		 */
 		Component.prototype.getSettings = function () {
@@ -101,14 +113,15 @@
 		};
 
 		/**
-		 * Bind event handlers to DOM event using jQuery's on method while
-		 * making sure the event handler's context is set to the class instance
-		 * instead of the event target. Will return a unique id which can be used
-		 * to unbind the event handler.
+		 * Bind handlers to DOM events using jQuery's on() method while
+		 * making sure the event handler's context is pointing to the class instance
+		 * instead of the event target. Will return a unique event handler id.
+		 *
 		 * @param  {jQuery}
 		 * @param  {string}
 		 * @param  {string} (optional)
 		 * @param  {function}
+		 *
 		 * @return {string}
 		 */
 		Component.prototype._on = function ($el, event, selector, handler) {
@@ -124,7 +137,7 @@
 			}
 
 			// making sure that the event handler's this keyword is pointing to the
-			// class instance instead of the event target. This way we're also creating
+			// class instance instead of the event target. We're also creating
 			// a unique event handler to unbind with later on.
 			handlerWrapper = function () {
 				handler.apply(_self, arguments);
@@ -149,9 +162,11 @@
 		};
 
 		/**
-		 * Unbind event handlers bound with the _on method.
+		 * Unbind event handlers bound with the _on() method.
 		 * If the uid parameter is omitted, all event handlers will be unbind.
+		 *
 		 * @param  {string} (optional)
+		 *
 		 * @return {void}
 		 */
 		Component.prototype._off = function (uid) {
@@ -165,6 +180,7 @@
 				}
 
 			}else if(this._eventData.hasOwnProperty(uid)) {
+
 				eventData = this._eventData[uid];
 				eventData.$el.off(eventData.event, eventData.selector, eventData.handler);
 
@@ -176,9 +192,11 @@
 		/**
 		 * Query for DOM elements using jQuery's query function
 		 * while maintaining a cache to avoid unnecessary DOM queries.
+		 *
 		 * @param  {string}
 		 * @param  {string|jQuery} (optional) defaults to the component's main element
 		 * @param  {boolean} (optional) defaults to false
+		 *
 		 * @return {jQuery}
 		 */
 		Component.prototype._query = function (selector, context, forceQuery) {
@@ -205,7 +223,36 @@
 		};
 
 		/**
+		 * Given a string, jQuery object, HTML Element or undefined, this method will
+		 * always make sure to return a jQuery object. Very useful when trying to convert
+		 * a settings property to a jQuery object.
+		 *
+		 * @param  {string|jQuery|string|undefined}
+		 *
+		 * @return {jQuery}
+		 */
+		Component.prototype._resolveElement = function (element) {
+
+			var $result;
+
+			$result = undefined;
+
+			if(element instanceof jQuery) {
+				$result = element;
+			}else if(typeof element === 'undefined') {
+				$result = this.getEl();
+			}else if(typeof element === 'string') {
+				$result = this._query(element);
+			}else if(element instanceof HTMLElement) {
+				$result = $(element);
+			}
+
+			return $result;
+		};
+
+		/**
 		 * Empty query cache
+		 *
 		 * @return {void}
 		 */
 		Component.prototype._clearQueryCache = function () {

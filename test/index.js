@@ -106,14 +106,6 @@ describe('Component', function () {
 
 	describe('query cache', function () {
 
-		var $test;
-
-		beforeEach(function () {
-			$('#test').remove();
-			$('body').append('<div id="test"/>');
-			$test = $('#test');
-		});
-
 		it('should cache elements', function () {
 			var $result = instance._query('.child');
 			expect(instance._queryCache['.child']).toEqual($result)
@@ -129,6 +121,32 @@ describe('Component', function () {
 			instance._query('.child');
 			instance.destroy();
 			expect(Object.keys(instance._queryCache).length).toEqual(0);
+		});
+
+	});
+
+	describe('resolve element', function () {
+
+		it('should return a jQuery object when given a string', function () {
+			var $el = instance._resolveElement('.child');
+			expect($el[0]).toBe(instance.getEl().find('.child')[0]);
+		});
+
+		it('should return a jQuery object when given a jQuery object', function () {
+			var $el = instance._resolveElement(instance.getEl().find('.child'));
+			expect($el[0]).toBe(instance.getEl().find('.child')[0]);
+		});
+
+		it('should return the main element when given undefined', function () {
+			var el = undefined;
+			var $el = instance._resolveElement(el);
+			expect($el).toBe(instance.getEl());
+		});
+
+		it('should return a jQuery object when given an HTMLElement', function () {
+			var $el = instance._resolveElement(instance.getEl().find('.child')[0]);
+			var el = instance.getEl().find('.child')[0];
+			expect($el[0]).toBe(instance.getEl().find('.child')[0]);
 		});
 
 	});
