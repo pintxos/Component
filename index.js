@@ -80,7 +80,7 @@
 			// removing references to DOM element by clearing out the query cache
 			this._clearQueryCache();
 
-			this._isDistroyed = true;
+			this._isDestroyed = true;
 
 			this.getEl().trigger(this.getSettings().events.destroy);
 		};

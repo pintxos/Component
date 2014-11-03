@@ -26,6 +26,16 @@ describe('Component', function () {
 
 	describe('lifecycle API', function () {
 
+		it('should be destroyable', function () {
+			expect(instance.isDestroyed()).toBe(true);
+
+			instance.init();
+			expect(instance.isDestroyed()).toBe(false);
+
+			instance.destroy();
+			expect(instance.isDestroyed()).toBe(true);
+		});
+
 		it('shoud trigger init and destroy events on the component\'s main element', function () {
 
 			var initTriggered, destroyTriggered;
