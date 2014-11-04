@@ -130,7 +130,6 @@ describe('Component', function () {
 			// query again with forceQuery = true
 			var $el = instance._query('.newElement', true);
 
-
 			expect($el[0]).toEqual(instance.getEl().find('.newElement')[0]);
 		});
 
