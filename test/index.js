@@ -62,7 +62,7 @@ describe('Component', function () {
 		var $link;
 
 		beforeEach(function () {
-			$('.testLink').remove();
+			$('.testLink, .newElement').remove();
 			$('body').append('<a class="testLink" href="#">Test</a>');
 			$link = $('.testLink');
 		});
@@ -125,6 +125,12 @@ describe('Component', function () {
 			instance._query('.child');
 			instance._query('.child');
 			expect(Object.keys(instance._queryCache).length).toEqual(1)
+		});
+
+		it('should take the forceQuery param into account', function () {
+			instance.getEl().append('<div class="newElement"/>');
+			var $el = instance._query('.newElement');
+			expect($el[0]).toEqual(instance.getEl().find('.newElement')[0]);
 		});
 
 		it('should clear the query cache when the component is destroyed', function () {
