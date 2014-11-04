@@ -1,21 +1,13 @@
 describe('Component', function () {
 
+	'use strict';
+
 	var instance;
 
 	beforeEach(function () {
 		$('.test').remove();
 		$('body').append('<div class="test"><div class="child"/></div>');
 		instance = new pintxos.Component($('.test')[0], {});
-	});
-
-
-	it('should have an init and destroy method', function () {
-		expect(instance.init).toBeDefined();
-		expect(instance.destroy).toBeDefined();
-	});
-
-	it('should have a getEl method', function () {
-		expect(instance.getEl).toBeDefined();
 	});
 
 	describe('getEl()', function () {
@@ -128,8 +120,17 @@ describe('Component', function () {
 		});
 
 		it('should take the forceQuery param into account', function () {
+
+			// query for a non existing element => this will be cached
+			instance._query('.newElement');
+
+			// adding the element
 			instance.getEl().append('<div class="newElement"/>');
-			var $el = instance._query('.newElement');
+
+			// query again with forceQuery = true
+			var $el = instance._query('.newElement', true);
+
+
 			expect($el[0]).toEqual(instance.getEl().find('.newElement')[0]);
 		});
 

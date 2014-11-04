@@ -205,8 +205,8 @@
 
 			// shuffle arguments
 			if(typeof context === 'undefined' || typeof context === 'boolean') {
-				context = this.getEl();
 				forceQuery = context;
+				context = this.getEl();
 			}
 
 			forceQuery = (typeof forceQuery === 'undefined') ? false : forceQuery;
