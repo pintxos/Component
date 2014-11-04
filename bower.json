@@ -6,8 +6,11 @@
 		"**/.*",
 		"node_modules",
 		"bower_components",
-		"test"
+		"test",
+		"Gruntfile.js",
+		"package.json"
 	],
+	"main": "index.js",
 	"authors": [
 		"Jelle Versele"
 	],
