@@ -10,10 +10,32 @@ describe('Component', function () {
 		instance = new pintxos.Component($('.test')[0], {});
 	});
 
-	describe('getEl()', function () {
+	describe('element getter', function () {
 		it('should return a jQuery object', function () {
 			expect(instance.getEl() instanceof jQuery).toBe(true);
 		});
+	});
+
+	describe('settings getter', function () {
+
+		it('should return the default settings when no custom options are given', function () {
+			expect(instance.getSettings()).toEqual(pintxos.Component.DEFAULTS);
+		});
+
+		it('should merge the options passed into the constructor with the default options', function () {
+			var myInstance, myOptions;
+
+			myOptions = {
+				myOption: 'myOption',
+				events: {
+					init: 'test'
+				}
+			};
+
+			myInstance = new pintxos.Component($('.test')[0], myOptions);
+			expect(myInstance.getSettings()).toEqual($.extend(true, {}, pintxos.Component.DEFAULTS, myOptions));
+		});
+
 	});
 
 	describe('lifecycle API', function () {
@@ -28,7 +50,7 @@ describe('Component', function () {
 			expect(instance.isDestroyed()).toBe(true);
 		});
 
-		it('shoud trigger init and destroy events on the component\'s main element', function () {
+		it('should trigger init and destroy events on the component\'s main element', function () {
 
 			var initTriggered, destroyTriggered;
 
@@ -166,7 +188,4 @@ describe('Component', function () {
 		});
 
 	});
-
-
-
 });

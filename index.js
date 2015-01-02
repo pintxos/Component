@@ -18,30 +18,33 @@
 		$
 	) {
 
-		var Component, _defaults, _uid;
+		var Component, _uid;
 
-		_uid = 0;
-
-		/* Default settings
+		/* Vars
 		----------------------------------------------- */
-		_defaults = {
-			events: {
-				init: 'init.Component',
-				destroy: 'destroy.Component'
-			}
-		};
+		_uid = 0;
 
 
 		/* Constructor
 		----------------------------------------------- */
 		Component = function (el, options) {
-			this._settings = $.extend(true, {}, _defaults, options);
+			this._settings = $.extend(true, {}, Component.DEFAULTS, options);
 			this._$el = $(el);
 
 			this._eventData = {};
 			this._queryCache = {};
 			this._isDestroyed = true;
 
+		};
+
+
+		/* Constants
+		----------------------------------------------- */
+		Component.DEFAULTS = {
+			events: {
+				init: 'init.Component',
+				destroy: 'destroy.Component'
+			}
 		};
 
 
