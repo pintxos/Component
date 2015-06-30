@@ -12,6 +12,10 @@ The only hard dependecy is jQuery but you'll probably also want to include an in
 
 Installation is currently only possible through bower or via download. I'm planning to add the package to NPM in the near future. For now only AMD and globals are supported.
 
+```
+bower install pintxos-component --save
+```
+
 ### AMD
 Assuming you've installed the package through bower and have set the bower_components directory as the base directory of your project. Please note that you should also create a path for jQuery, like describe [here](http://requirejs.org/docs/jquery.html) ...
 
