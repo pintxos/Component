@@ -93,7 +93,7 @@ All pintxos components should have an init() and destroy() method. By default th
 Triggers an init event on the main element 
 
 #### destroy()
-Cleans up selector references and ubinds event handlers. Also triggers a destroy event on the main element.
+Cleans up selector references and unbinds all event handlers. Also triggers a destroy event on the main element.
 
 #### isDestroy()
 Is this component destroy or what?
